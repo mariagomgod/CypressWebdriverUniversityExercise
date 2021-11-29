@@ -1,29 +1,33 @@
 /// <reference types="cypress" />
 
+import {OurProductsPage} from '../page-objects/our-products-page';
+
 describe('Our Products Menu', () => {
 
+    const ourProductsPage = new OurProductsPage();
+
     beforeEach (() => {
-        cy.visit('http://webdriveruniversity.com/Page-Object-Model/products.html');
+        ourProductsPage.navigate();
     });
 
     it('Should have eight elements', () => {
-        cy.get('div.row > div[data-target="#myModal"]').should('have.length', 8);
+        ourProductsPage.verifyEightElementsAreShown();
     });
 
     describe('When clicking on a product', () => {
 
         beforeEach (() => {
-            cy.get('#special-offers').click();
+            ourProductsPage.clickOnAProduct();
             cy.wait(1000);
         });
 
         it('A modal appears', () => {
-            cy.get('#myModal:visible').should('include.text', 'SPECIAL OFFER! - GET 30% OFF YOUR FIRST ORDER AT WEBDRIVERUNIVERSITY.COM');
+            ourProductsPage.verifyModalIsShown();
         });
 
         it('When clicking the Proceed button, the modal disappears', () => {
-            cy.get('div.modal-footer > button').contains('Proceed').click();
-            cy.get('#myModal:visible').should('not.exist');
+            ourProductsPage.clickOnProceedButton();
+            ourProductsPage.verifyModalIsNotShown();
         });
     });
 });

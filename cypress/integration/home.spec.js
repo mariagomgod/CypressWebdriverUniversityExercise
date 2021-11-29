@@ -8,16 +8,16 @@ describe('Home Menu', () => {
 
     beforeEach (() => {
         homePage.navigate();
-        homePage.getFindOutMoreButton().click();
+        homePage.clickFindOutMoreButton();
         cy.wait(1000);
     });
 
     it('Clicking the Find Out More Button, a modal appear', () => {
-        cy.get('#myModal:visible').should('exist').and('include.text', 'Welcome to webdriveruniversity.com');
+        homePage.verifyModalIsShown();
     });
 
     it('Clicking the close button of the modal, the modal is closed', () => {
-        cy.get('button.btn.btn-default').contains('Close').click();
-        cy.get('#myModal:visible').should('not.exist');
+        homePage.clickCloseButton();
+        homePage.verifyModalIsNotShown();
     });
 });
